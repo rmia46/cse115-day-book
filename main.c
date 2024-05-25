@@ -28,6 +28,7 @@ int main() {
     }
     else if(control == 'f') {
       //recoverPass();
+      recoverPass();
     }
     else if(control == 'e') {
       break;
@@ -58,6 +59,8 @@ int main() {
           getchar();
         }
         else if(control == 'o') {
+          loginStat = FALSE;
+          signupStat = FALSE;
           break;
         }
         else {

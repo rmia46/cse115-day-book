@@ -74,12 +74,32 @@ int checkExistence(user *userData, int pos, int count) {
     }
     if(pos == 2) {
       if(!strcmp(testUser.recoveryKey, userData->recoveryKey)) {
+        strcpy(userData->name, testUser.name);
+        strcpy(userData->password, testUser.password);
         return TRUE;
       }
     }
   }
   return FALSE;
 } 
+int recoverPass() {
+  user userData;
+  printf("Enter recovery key\n> ");
+  fgets(userData.recoveryKey, MAX_STRING_SIZE, stdin);
+  if(userData.recoveryKey[strlen(userData.recoveryKey) - 1] == '\n') {
+      userData.recoveryKey[strlen(userData.recoveryKey) - 1] = '\0';
+  }
+  if(checkExistence(&userData, 2, 1) == TRUE) {
+    printf("Your username: %s\n", userData.name);
+    printf("Your password: %s\n", userData.password);
+    printf("Press any key to continue\n");
+    getchar();
+    return TRUE;
+  }
+  printf("Could not recover informat\n");
+  getchar();
+  return FALSE;
+}
 
 // the signup function
 int signup(char *username) {
