@@ -8,7 +8,7 @@ int main() {
     interface(LOGO, TRUE);
     interface(LOGIN, FALSE);
     printf("> ");
-    scanf("%c", &control);
+    scanf(" %c", &control);
     // __fpurge(stdin);
     flushStream(); 
     if(control == 'l') {
@@ -38,7 +38,7 @@ int main() {
 
         interface(DIARY, TRUE);
         printf("> ");
-        scanf("%c", &control);
+        scanf(" %c", &control);
         flushStream();
         if(control == 'n') {
           ink(username);

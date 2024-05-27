@@ -176,7 +176,7 @@ int viewDiary(string username) {
   // if(dcount )
   // Prompt for action
   printf("\nOption\n> ");
-  scanf("%c", &option);
+  scanf(" %c", &option);
   if(option == 'o') {
     printf("Index\n> ");
     scanf("%d", &choice);

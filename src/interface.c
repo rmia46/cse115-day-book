@@ -8,7 +8,12 @@ void flushStream() {
   #ifdef __linux__
     __fpurge(stdin);
   #elif _WIN32
-    fflush(stdin);
+    // fflush(stdin);
+    int c;
+    do {
+      c = getchar();
+    }
+    while(c != '\n' && c != EOF);
   #endif
 }
 
