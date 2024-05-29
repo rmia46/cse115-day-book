@@ -28,3 +28,4 @@ void inf();
 void generateList(string filename);
 void deleteDiary(string filename);
 int searchDiary(string username);
+void rewrite(string username);

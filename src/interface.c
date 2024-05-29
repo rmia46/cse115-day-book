@@ -1,7 +1,7 @@
 #include "../include/interface.h"
 
 void border() {
-  printf("--------------------------------------------------------\n");
+  printf("---------------------------------------------------------------\n");
 }
 
 void flushStream() {
@@ -30,7 +30,7 @@ void clearScreen(int duration) {
 void interface(int window, int clear) {
   string loginComponents[4] = {"Login(l)", "Sign Up(s)", "Forgot Password(f)", "Exit(e)"};
   string diaryComponents[5] = {"New Diary(n)", "View(v)", "Help(h)", "Logout(o)"};
-  string editComponents[4] = {"Open(o)", "Search(/)", "Delete(d)", "Main Menu(m)"};
+  string editComponents[5] = {"Open(o)", "Search(/)", "Delete(d)", "Rewrite(r)", "Main Menu(m)"};
   if(clear == TRUE)
     clearScreen(DEFAULT_SLEEP);
   if(window == LOGIN) {
@@ -52,7 +52,7 @@ void interface(int window, int clear) {
     return;
   }
   if(window == EDIT){
-    for(int i = 0; i < 4; i++) {
+    for(int i = 0; i < 5; i++) {
       printf("%s%s", editComponents[i], SPACING);
     }
     printf("%s", NEWLINE);
@@ -74,6 +74,8 @@ void interface(int window, int clear) {
   }
   if(window == HELP) {
     printf("Help\n");
+    border();
+    printf("- Use the characters hinted within brackets (n) to navigate through the program.\n- You must have a username and password to use the program. If it's first time, sign up first.\n- Don't input string value on integer fields as that might result in undefined behavior\n- The diary files are stored in the diary folder with your username.\n- While writing a new diary, type :s on a newline to save the new diary file. If the program is not respoding, please restart it. ");
     printf(NEWLINE);
     return;
 

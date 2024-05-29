@@ -59,7 +59,7 @@ int ink(string username) {
   sprintf(path, "%s%s%s", PATH_DIARY, username, EXTENSION_TXT);
   sprintf(pathNew, "%s%d.%s%s", PATH_DIARY, count, username, EXTENSION_TXT);
   
-  file entry = fopen(path, "a");
+  file entry = fopen(path, "w");
   if(entry == NULL) {
     printf("Error Creating New File\n");
     return FALSE;
@@ -72,7 +72,6 @@ int ink(string username) {
   fprintf(entry, "Added to favorites: %s", newDiary.favorites);
   fprintf(entry, "Author: %s", newDiary.author);
   fprintf(entry, "Date: %d/%d/%d\n", newDiary.timestamp.day, newDiary.timestamp.month, newDiary.timestamp.year);
-  // fwrite(&newDiary, sizeof(newDiary), 1, entry);
   clearScreen(0);
   printf("Write below. Write :s to stop writing\n> ");
   while(TRUE) {
@@ -135,6 +134,7 @@ void generateList(string username) {
   }
   return;
 }
+
 void openDiaryContent(string username, int index) {
   string pathFile;
   char lines[DIARY_SIZE];
@@ -152,6 +152,8 @@ void openDiaryContent(string username, int index) {
   }
   printf("\n\n");
 }
+
+// View Diary function to read from the diary and modify them
 int viewDiary(string username) {
   int choice;
   string filename, pathInf, pathFile;
@@ -197,9 +199,97 @@ int viewDiary(string username) {
   if(option == 'm') {
     return FALSE;
   }
-  return TRUE;
+  if(option == 'r') {
+    rewrite(username);
+    return TRUE;
+  }
+  return FALSE;
 }
+void rewrite(string username) {
+  string path;
+  int index;
+  char choice;
+  file write;
+  char buffer[DIARY_SIZE];
+  printf("Index to modify\n> ");
+  scanf("%d", &index);
+  sprintf(path, "%s%d.%s%s", PATH_DIARY, index, username, EXTENSION_TXT);
+  printf("Do you want to rewrite the whole diary or append? (r/a)\n> ");
+  scanf(" %c", &choice);
+  flushStream();
+  if(choice != 'r' && choice != 'a') {
+    rewrite(username);
+  }
+  else if(choice == 'r') {
+    write = fopen(path, "w");
+    if(write == NULL) {
+      printf("Error writing to file\n");
+      return;
+    }
+    diary newDiary;
+    printf("Name of the diary\n> ");
+    fgets(newDiary.name, MAX_STRING_SIZE, stdin);
+    printf("Title of the diary\n> ");
+    fgets(newDiary.title, MAX_STRING_SIZE, stdin);
+    printf("Tag\n> ");
+    fgets(newDiary.tag, MAX_STRING_SIZE, stdin);
+    printf("Day\n> ");
+    fgets(newDiary.day, MAX_STRING_SIZE, stdin);
+    printf("Add to favorites(y/n)\n> ");
+    fgets(newDiary.favorites, MAX_STRING_SIZE, stdin);
+    printf("Author\n> ");
+    fgets(newDiary.author, MAX_STRING_SIZE, stdin);
+    printf("Enter numeric date\n");
+    printf("Day: ");
+    scanf("%d", &newDiary.timestamp.day);
+    printf("Month: ");
+    scanf("%d", &newDiary.timestamp.month);
+    printf("Year: ");
+    scanf("%d", &newDiary.timestamp.year);
 
+    fprintf(write, "Name: %s", newDiary.name);
+    fprintf(write, "Title: %s", newDiary.title);
+    fprintf(write, "Tag: %s", newDiary.tag);
+    fprintf(write, "Day: %s", newDiary.day);
+    fprintf(write, "Added to favorites: %s", newDiary.favorites);
+    fprintf(write, "Author: %s", newDiary.author);
+    fprintf(write, "Date: %d/%d/%d\n", newDiary.timestamp.day, newDiary.timestamp.month, newDiary.timestamp.year);
+    clearScreen(0);
+    printf("Write below. Write :s to stop writing\n> ");
+    while(TRUE) {
+      if(fgets(buffer, DIARY_SIZE, stdin) == NULL)
+        break;
+      if(strcmp(buffer, ":s\n") == 0)
+        break;
+      fputs(buffer, write);
+    }
+    fseek(write, 0, SEEK_END);
+    printf("Successfully wrote %ld bytes\n", ftell(write));
+    fclose(write);
+    return;
+  }
+  else {
+    write = fopen(path, "a");
+    if(write == NULL) {
+      printf("Error reading file\n");
+      return;
+    }
+    openDiaryContent(username, index);
+    printf("Enter lines to be added (:s to save)...\n");
+    while(TRUE) {
+      if(fgets(buffer, DIARY_SIZE, stdin) == NULL)
+        break;
+      if(strcmp(buffer, ":s\n") == 0)
+        break;
+      fprintf(write, "%s", buffer);
+      // fputs(buffer, write);
+    }
+    fseek(write, 0, SEEK_END);
+    printf("Successfully wrote %ld bytes\n", ftell(write));
+    fclose(write);
+  }
+  return;
+}
 void deleteDiary(string username) {
   string path, pathInf, pathTemp;
   int choice, firstNum;
