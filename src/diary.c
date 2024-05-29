@@ -335,6 +335,7 @@ int searchDiary(string username) {
   //__fpurge(stdin);
   flushStream();
   fgets(phrase, MAX_STRING_SIZE, stdin);
+  phrase[strcspn(phrase, "\n")] = '\0';
   sprintf(pathDiary, "%s%d.%s%s", PATH_DIARY, index, username, EXTENSION_TXT);
   file search = fopen(pathDiary, "r");
   if(search == NULL) {
