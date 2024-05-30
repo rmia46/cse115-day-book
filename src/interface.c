@@ -1,7 +1,7 @@
 #include "../include/interface.h"
 
 void border() {
-  printf("---------------------------------------------------------------\n");
+  printf("--------------------------------------------------------\n");
 }
 
 void flushStream() {
@@ -63,8 +63,8 @@ void interface(int window, int clear) {
   if(window == LOGO) {
     printf("       __..._   _...__\n");
     printf("  _..-\"      `Y`      \"-._\n");
-    printf("  \\ Once upon |           /\n");
-    printf("  \\\\  a time..|          //\n");
+    printf("  \\ Day book  |           /\n");
+    printf("  \\\\          |          //\n");
     printf("  \\\\\\         |         ///\n");
     printf("   \\\\\\ _..---.|.---.._ ///\n");
     printf("    \\\\`_..---.Y.---.._`//\n");
@@ -76,6 +76,8 @@ void interface(int window, int clear) {
     printf("Help\n");
     border();
     printf("- Use the characters hinted within brackets (n) to navigate through the program.\n- You must have a username and password to use the program. If it's first time, sign up first.\n- Don't input string value on integer fields as that might result in undefined behavior\n- The diary files are stored in the diary folder with your username.\n- While writing a new diary, type :s on a newline to save the new diary file. If the program is not respoding, please restart it. ");
+    printf(NEWLINE);
+    printf("Day Book, version 1.0, dev: Roman Mia\n");
     printf(NEWLINE);
     return;
 

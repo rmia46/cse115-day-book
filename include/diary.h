@@ -24,7 +24,6 @@ int logout();
 int search();
 int ink(string author);
 int viewDiary(string username);
-void inf();
 void generateList(string filename);
 void deleteDiary(string filename);
 int searchDiary(string username);
